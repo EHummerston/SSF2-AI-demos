@@ -1,0 +1,3 @@
+[submodule "SSF2-AI"]
+	path = SSF2-AI
+	url = git@github.com:EHummerston/SSF2-AI.git
