@@ -47,7 +47,7 @@ function Zemgief:spd()
       
    elseif self.frame <= 10 then  -- up + LP
       self:setButton("Up",true)
-      self:setButton("Y",true)      
+      self:setButton("LP",true)      
          
    elseif self.frame > 35 then
       self.frame = 0
@@ -66,7 +66,7 @@ function Zemgief:antiAir()
    
    elseif self.frame == 2 then
       self:setButton("Up",true)
-      self:setButton("L",true)
+      self:setButton("HP",true)
    
    else      
       self.frame = 0

@@ -38,12 +38,12 @@ function Bert:fireball()
       self:setButton("Down",true)
    elseif self.i < 6 then  -- down forward
       self:setButton("Down",true)
-      self:setButton(self:getDirectionButton(true),true)
+      self:setButton("Toward",true)
    elseif self.i < 9 then  -- forward
-      self:setButton(self:getDirectionButton(true),true)
+      self:setButton("Toward",true)
    elseif self.i < 12 then -- forward + puinch
-      self:setButton(self:getDirectionButton(true),true)
-      self:setButton("X",true)      
+      self:setButton("Toward",true)
+      self:setButton("LP",true)      
    -- Long buffer to prevent accidental Shoryuken commands
    elseif self.i > 30 then
       self.i = -1
@@ -56,13 +56,13 @@ end
 -----------------------------------------------------------------------------
 function Bert:dragonPunch()
    if self.i < 3 then  -- forward
-      self:setButton(self:getDirectionButton(true),true)
+      self:setButton("Toward",true)
    elseif self.i < 6 then -- down
       self:setButton("Down",true)
    elseif self.i < 9 then -- down forward + punch
       self:setButton("Down",true)
-      self:setButton(self:getDirectionButton(true),true)
-      self:setButton("L",true)
+      self:setButton("Toward",true)
+      self:setButton("HP",true)
    elseif self.i > 12 then
       self.i = -1
    end
@@ -91,7 +91,7 @@ function Bert:advance()
          self.action = "counter fireball"
       else  -- they are far away or this isn't the first frame of the attack
          self.newAttack = false
-         self:setButton(self:getDirectionButton(false),true)
+         self:setButton("Back",true)
          self.action = "block"
          self.i = -1
          if self:isOpponentCrouching() then  -- if enemy is crouching
@@ -106,7 +106,7 @@ function Bert:advance()
             self:dragonPunch()
             self.action = "anti-air"
          else  -- p2 is close on the ground
-            self:setButton(self:getDirectionButton(false),true)
+            self:setButton("Back",true)
             self.action = "walk back"
             self.i = -1
          end
@@ -121,7 +121,7 @@ function Bert:advance()
                self.action = "dp timeout"
             end
          else  -- we have a fireball out or the enemy is in the air
-            self:setButton(self:getDirectionButton(true),true)
+            self:setButton("Toward",true)
             self.action = "walk forward"
             self.walkTimer = 15
             self.i = -1
