@@ -5,7 +5,7 @@
 -- 2017 Edward Hummerston, Danny
 -----------------------------------------------------------------------------
 
-require("Bot")
+require("SSF2-AI.Bot")
 
 Zemgief = {}
 setmetatable(Zemgief, {__index = Bot})
@@ -37,13 +37,13 @@ end
 function Zemgief:spd()
    self.action = "SPD"
    if self.frame == 1 then -- forward
-      self:setButton(self:getDirectionButton(true),true)
+      self:setButton("Toward",true)
       
    elseif self.frame == 2 then   -- down
       self:setButton("Down",true)
       
    elseif self.frame == 3 then   --back
-      self:setButton(self:getDirectionButton(false),true)
+      self:setButton("Back",true)
       
    elseif self.frame <= 10 then  -- up + LP
       self:setButton("Up",true)
@@ -82,7 +82,7 @@ end
 function Zemgief:block()
    self.action = "Block"
    if self:isOpponentAttacking() then
-      self:setButton(self:getDirectionButton(false),true)
+      self:setButton("Back",true)
       if(self:isOpponentCrouching()) then
          self:setButton("Down",true)
       end
@@ -131,7 +131,7 @@ function Zemgief:idle()
    end
 
    if self:getDistance() > 50 then 
-      self:setButton(self:getDirectionButton(true),true)
+      self:setButton("Toward",true)
       self.action = "Walk Forward"
 
    else   
