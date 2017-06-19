@@ -32,8 +32,9 @@ end
 -----------------------------------------------------------------------------
 -- Sets the controller state in order to repeatedly complete a Hadoken
 -- command.
+-- @param strength       A string of the button to use for the fireball.
 -----------------------------------------------------------------------------
-function Bert:fireball()
+function Bert:fireball(strength)
    if self.i < 3 then   -- down
       self:setButton("Down",true)
    elseif self.i < 6 then  -- down forward
@@ -43,7 +44,7 @@ function Bert:fireball()
       self:setButton("Toward",true)
    elseif self.i < 12 then -- forward + puinch
       self:setButton("Toward",true)
-      self:setButton("LP",true)      
+      self:setButton(strength,true)      
    -- Long buffer to prevent accidental Shoryuken commands
    elseif self.i > 30 then
       self.i = -1
@@ -87,7 +88,7 @@ function Bert:advance()
          self:dragonPunch()
          self.action = "ume shoryken"
       elseif self:hasOpponentFireball() then-- counter fireball with the same
-         self:fireball()
+         self:fireball("HP")
          self.action = "counter fireball"
       else  -- they are far away or this isn't the first frame of the attack
          self.newAttack = false
@@ -114,7 +115,14 @@ function Bert:advance()
          if not self:hasFireball() and not self:isOpponentAir() then
          -- there isn't a fireball and p2 is on the ground
             if self.walkTimer <= 0 then   -- we weren't walking too recently
-               self:fireball()
+               local fbStrength = self:getDistance() % 3
+               if fbStrength == 0 then
+                  self:fireball("LP")
+               elseif fbStrength == 1 then
+                  self:fireball("MP")
+               else
+                  self:fireball("HP")
+               end
                self.action = "fireball"
             else  -- we were pressing forward recently
                self.walkTimer = self.walkTimer - 1
